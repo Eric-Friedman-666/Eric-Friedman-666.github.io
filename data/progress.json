@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "title": "Time-domain simulations for space-based gravitational-wave detectors",
+      "area": "Project 1",
+      "status": "manuscript",
+      "percent": 88,
+      "summary": "The main Taiji/LISA time-domain SGWB analysis is close to manuscript form, with detector response, TDI channels, FD/TD comparisons, astrophysical-background validation, sound-wave inference, and scalar-model interpretation already drafted.",
+      "tasks": [
+        "Finalize the equal-arm versus unequal-arm TD comparison and its physical interpretation.",
+        "Keep the recent XYZ full-covariance multirealization outputs synchronized with the paper figures.",
+        "Preserve environment, figure, table, and data provenance for reproducibility."
+      ],
+      "updatedAt": "2026-05-01T01:35:00+08:00",
+      "source": "Local manuscript and server lisa_td_paper_codex snapshot"
+    },
+    {
+      "title": "SPIIR pipeline analysis",
+      "area": "Project 2",
+      "status": "analysis",
+      "percent": 72,
+      "summary": "The existing SPIIR coherent postcoh and FAR pipeline has been traced from online command configuration through CUDA postcoh statistics, background maps, rank/FAP, FAR assignment, and FinalSink behavior.",
+      "tasks": [
+        "Turn the current formula and code-path notes into a compact English technical description.",
+        "Separate current pipeline evidence from proposed single-detector LLR/rank/FAR modifications.",
+        "Define the coordinated code changes required before the new branch can become an end-to-end pipeline."
+      ],
+      "updatedAt": "2026-05-01T16:30:00+08:00",
+      "source": "Local SPIIR pipe notes plus server /home/genshin/spiir commit 3ccc23575"
+    },
+    {
+      "title": "DWD foreground-noise injection for space-based detectors",
+      "area": "Project 3",
+      "status": "production",
+      "percent": 74,
+      "summary": "The response-first injection design is documented, and the 29-million-source Sangria/Taiji TDI2 SNR scan has completed with 17,448 sources selected above SNR 10.",
+      "tasks": [
+        "Move from SNR selection to explicit summed six-link response-cache injection.",
+        "Produce final foreground A/E/T data products for downstream stochastic-background inference.",
+        "Keep resolved and unresolved Galactic-binary populations traceable to catalog masks."
+      ],
+      "updatedAt": "2026-05-01T16:20:00+08:00",
+      "source": "Local DWD note and server /home/genshin/LISA_test/dwd_fig4_repro"
+    },
+    {
+      "title": "LIGO calibration uncertainty in stochastic-background analysis",
+      "area": "Project 4",
+      "status": "manuscript",
+      "percent": 78,
+      "summary": "The calibration work has been reconstructed into an English manuscript and report covering estimator-level, strain-level, insertion-point, physical-parameter, and Bayesian-marginalization branches.",
+      "tasks": [
+        "Clean known implementation caveats around AddToStrain path handling.",
+        "Condense the long technical report into a submission-ready narrative.",
+        "Retain the distinction between post-processing calibration and strain-level calibration effects."
+      ],
+      "updatedAt": "2026-04-16T22:52:00+08:00",
+      "source": "Local calibration manuscript and server /home/genshin/calib_paper figure snapshot"
+    },
+    {
+      "title": "Triplet scalar model: collider and gravitational-wave constraints",
+      "area": "Project 5",
+      "status": "running",
+      "percent": 91,
+      "summary": "The triplet-scalar scan is live on the server, with 521,030 completed rows out of 574,839 known rows, 490,077 valid rows, 354 timeouts, and 50 active jobs in the latest checked log.",
+      "tasks": [
+        "Continue the zoom-white scan and monitor timeout/invalid-region repairs.",
+        "Use the validated interpolation map and Bilby/dynesty outputs to connect GW posterior regions to (mSigma, a2).",
+        "Keep checkpoint traces and summary JSON files synchronized between server and local result folders."
+      ],
+      "updatedAt": "2026-05-01T16:38:13+08:00",
+      "source": "Server /home/genshin/ts_scan live summary"
+    }
+  ]
+}
