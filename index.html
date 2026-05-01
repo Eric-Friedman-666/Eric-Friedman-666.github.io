@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eric Friedman (Qingyuan Liang) | Research Homepage</title>
+    <meta
+      name="description"
+      content="Research homepage for Eric Friedman (Qingyuan Liang), focused on gravitational-wave data analysis, LISA/Taiji simulations, SPIIR, LIGO calibration, and scalar-sector cosmology."
+    />
+    <link rel="icon" href="assets/research-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="signalCanvas" aria-hidden="true"></canvas>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <img src="assets/research-mark.svg" alt="" />
+        <span>Eric Friedman</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#profile">Profile</a>
+        <a href="#work">Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#progress">Progress</a>
+        <a href="#publications">Publications</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="lead-section" aria-labelledby="profile-name">
+        <div class="lead-copy">
+          <p class="eyebrow" id="profile-kicker">Research Homepage</p>
+          <h1 id="profile-name">Eric Friedman (Qingyuan Liang)</h1>
+          <p class="headline" id="profile-headline">
+            Gravitational-wave data analysis, space-based detector simulations, and scalar-sector cosmology.
+          </p>
+          <p class="summary" id="profile-summary">
+            Graduate researcher working across LISA/Taiji time-domain simulation, stochastic-background inference, SPIIR pipeline analysis, LIGO calibration uncertainty, and beyond-the-Standard-Model phase-transition phenomenology.
+          </p>
+          <div class="lead-actions" id="profile-links"></div>
+        </div>
+
+        <aside class="status-panel" aria-labelledby="status-title">
+          <div class="panel-heading">
+            <p class="eyebrow">Live Research Board</p>
+            <h2 id="status-title">Current Status</h2>
+          </div>
+          <div class="status-grid" id="status-stats"></div>
+          <p class="refresh-note" id="last-refresh">Loading progress data...</p>
+        </aside>
+      </section>
+
+      <section class="profile-section" id="profile" aria-labelledby="profile-title">
+        <div class="section-heading">
+          <p class="eyebrow">Profile</p>
+          <h2 id="profile-title">Short CV</h2>
+        </div>
+        <div class="profile-layout">
+          <article class="profile-card primary-profile">
+            <h3>Research Identity</h3>
+            <p id="cv-overview"></p>
+            <div class="tag-row" id="cv-tags"></div>
+          </article>
+          <div class="profile-stack">
+            <article class="profile-card">
+              <h3>Education</h3>
+              <div id="education-list"></div>
+            </article>
+            <article class="profile-card">
+              <h3>Skills</h3>
+              <div id="skills-list"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-band" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <p class="eyebrow">Research Work</p>
+          <h2 id="work-title">Work I Have Participated In</h2>
+        </div>
+        <div class="research-grid" id="work-list"></div>
+      </section>
+
+      <section class="project-section muted" id="projects" aria-labelledby="projects-title">
+        <div class="section-heading">
+          <p class="eyebrow">Five Main Projects</p>
+          <h2 id="projects-title">Current Project Portfolio</h2>
+        </div>
+        <div class="project-list" id="project-list"></div>
+      </section>
+
+      <section class="split-section" id="progress" aria-labelledby="progress-title">
+        <div class="section-heading">
+          <p class="eyebrow">Progress Updates</p>
+          <h2 id="progress-title">Live Project Progress</h2>
+        </div>
+
+        <div class="progress-toolbar" aria-label="Progress filters">
+          <div class="segmented" id="progress-filters"></div>
+          <button class="icon-button" id="refresh-button" type="button" aria-label="Refresh progress">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 12a8 8 0 1 1-2.34-5.66" />
+              <path d="M20 4v6h-6" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="progress-grid" id="progress-list"></div>
+      </section>
+
+      <section class="section-band" id="publications" aria-labelledby="publications-title">
+        <div class="section-heading">
+          <p class="eyebrow">Publications</p>
+          <h2 id="publications-title">Selected Publications and Presentations</h2>
+        </div>
+        <div class="outputs-grid" id="outputs-list"></div>
+      </section>
+
+      <section class="timeline-section" aria-labelledby="future-title">
+        <div class="section-heading">
+          <p class="eyebrow">Future Direction</p>
+          <h2 id="future-title">Near-Term Research Interests</h2>
+        </div>
+        <ol class="timeline" id="timeline-list"></ol>
+      </section>
+
+      <section class="contact-section" aria-labelledby="contact-title">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">Collaboration</h2>
+        </div>
+        <div class="contact-links" id="contact-links"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span id="footer-note">Built as a local, data-driven research homepage.</span>
+      <span id="clock"></span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
