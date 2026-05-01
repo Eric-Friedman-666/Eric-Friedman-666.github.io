@@ -798,13 +798,13 @@ h3 {
   }
 
   h1 {
-    font-size: clamp(32px, 9.5vw, 38px);
+    font-size: clamp(28px, 8vw, 32px);
     line-height: 1.02;
   }
 
   .name-alias {
     margin-left: 0.16em;
-    font-size: 14px;
+    font-size: clamp(10px, 3vw, 12px);
   }
 
   .headline {
