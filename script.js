@@ -358,6 +358,42 @@ function drawSignalCanvas() {
   let height = 0;
   let raf = 0;
 
+  function pointOnLine(start, end, t) {
+    return {
+      x: start.x + (end.x - start.x) * t,
+      y: start.y + (end.y - start.y) * t,
+    };
+  }
+
+  function drawSpacecraft(point, angle, color) {
+    context.save();
+    context.translate(point.x, point.y);
+    context.rotate(angle);
+    context.fillStyle = "rgba(255, 253, 248, 0.92)";
+    context.strokeStyle = color;
+    context.lineWidth = 1.7;
+    context.beginPath();
+    context.moveTo(0, -7);
+    context.lineTo(7, 0);
+    context.lineTo(0, 7);
+    context.lineTo(-7, 0);
+    context.closePath();
+    context.fill();
+    context.stroke();
+
+    context.strokeStyle = "rgba(23, 32, 28, 0.22)";
+    context.lineWidth = 1;
+    context.beginPath();
+    context.moveTo(-12, -3);
+    context.lineTo(-7, 0);
+    context.lineTo(-12, 3);
+    context.moveTo(12, -3);
+    context.lineTo(7, 0);
+    context.lineTo(12, 3);
+    context.stroke();
+    context.restore();
+  }
+
   function resize() {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
     width = window.innerWidth;
@@ -389,42 +425,122 @@ function drawSignalCanvas() {
       context.stroke();
     }
 
-    const bands = [
-      { color: "rgba(15, 118, 110, 0.22)", amp: 34, speed: 0.0007, offset: 0 },
-      { color: "rgba(39, 100, 167, 0.18)", amp: 24, speed: 0.0011, offset: 1.8 },
-      { color: "rgba(179, 67, 51, 0.14)", amp: 18, speed: 0.0015, offset: 3.1 },
+    const waves = [
+      { color: "rgba(15, 118, 110, 0.18)", amp: 30, speed: 0.00072, offset: 0 },
+      { color: "rgba(39, 100, 167, 0.14)", amp: 23, speed: 0.00105, offset: 1.8 },
+      { color: "rgba(179, 67, 51, 0.1)", amp: 16, speed: 0.0014, offset: 3.1 },
     ];
 
-    bands.forEach((band, index) => {
+    waves.forEach((wave, index) => {
       context.beginPath();
-      context.strokeStyle = band.color;
+      context.strokeStyle = wave.color;
       context.lineWidth = index === 0 ? 2 : 1.5;
       for (let x = -20; x <= width + 20; x += 10) {
         const y =
-          height * (0.28 + index * 0.18) +
-          Math.sin(x * 0.011 + time * band.speed + band.offset) * band.amp +
-          Math.cos(x * 0.004 + time * band.speed * 0.7) * band.amp * 0.4;
+          height * (0.3 + index * 0.19) +
+          Math.sin(x * 0.011 + time * wave.speed + wave.offset) * wave.amp +
+          Math.cos(x * 0.004 + time * wave.speed * 0.7) * wave.amp * 0.4;
         if (x === -20) context.moveTo(x, y);
         else context.lineTo(x, y);
       }
       context.stroke();
     });
 
-    context.strokeStyle = "rgba(15, 118, 110, 0.24)";
+    const centerX = width * (width < 760 ? 0.68 : 0.76);
+    const centerY = height * (width < 760 ? 0.24 : 0.245);
+    const radius = Math.min(width, height) * (width < 760 ? 0.16 : 0.145);
+    const orbitRadiusX = radius * 2.35;
+    const orbitRadiusY = radius * 0.72;
+    const phase = time * 0.00011;
+    const armBreath = Math.sin(time * 0.0009) * radius * 0.018;
+
+    context.save();
+    context.translate(centerX, centerY);
+    context.rotate(-0.18);
+    context.strokeStyle = "rgba(39, 100, 167, 0.08)";
     context.lineWidth = 1.2;
-    const centerX = width * 0.74;
-    const centerY = height * 0.35;
-    const radius = Math.min(width, height) * 0.11;
     context.beginPath();
-    for (let i = 0; i < 3; i += 1) {
-      const angle = -Math.PI / 2 + (i * Math.PI * 2) / 3 + time * 0.00008;
-      const x = centerX + Math.cos(angle) * radius;
-      const y = centerY + Math.sin(angle) * radius;
-      if (i === 0) context.moveTo(x, y);
-      else context.lineTo(x, y);
-    }
+    context.ellipse(0, 0, orbitRadiusX, orbitRadiusY, 0, 0, Math.PI * 2);
+    context.stroke();
+    context.restore();
+
+    const vertices = Array.from({ length: 3 }, (_, index) => {
+      const angle = -Math.PI / 2 + (index * Math.PI * 2) / 3 + phase;
+      const breathing = armBreath * Math.cos(time * 0.00065 + index * 1.7);
+      return {
+        x: centerX + Math.cos(angle) * (radius + breathing),
+        y: centerY + Math.sin(angle) * (radius + breathing),
+        angle,
+      };
+    });
+
+    const arms = [
+      [vertices[0], vertices[1], "rgba(15, 118, 110, 0.34)"],
+      [vertices[1], vertices[2], "rgba(39, 100, 167, 0.3)"],
+      [vertices[2], vertices[0], "rgba(179, 67, 51, 0.24)"],
+    ];
+
+    context.lineCap = "round";
+    arms.forEach(([start, end, color], index) => {
+      context.strokeStyle = "rgba(255, 253, 248, 0.62)";
+      context.lineWidth = 6;
+      context.beginPath();
+      context.moveTo(start.x, start.y);
+      context.lineTo(end.x, end.y);
+      context.stroke();
+
+      context.strokeStyle = color;
+      context.lineWidth = 1.8;
+      context.beginPath();
+      context.moveTo(start.x, start.y);
+      context.lineTo(end.x, end.y);
+      context.stroke();
+
+      const pulse = (time * 0.00022 + index / 3) % 1;
+      const reversePulse = (pulse + 0.46) % 1;
+      [pulse, reversePulse].forEach((position, pulseIndex) => {
+        const point = pulseIndex === 0 ? pointOnLine(start, end, position) : pointOnLine(end, start, position);
+        context.fillStyle = pulseIndex === 0 ? "rgba(15, 118, 110, 0.55)" : "rgba(39, 100, 167, 0.44)";
+        context.beginPath();
+        context.arc(point.x, point.y, 3.4, 0, Math.PI * 2);
+        context.fill();
+      });
+    });
+
+    context.beginPath();
+    context.strokeStyle = "rgba(23, 32, 28, 0.16)";
+    context.lineWidth = 1;
+    context.moveTo(vertices[0].x, vertices[0].y);
+    context.lineTo(centerX, centerY);
+    context.moveTo(vertices[1].x, vertices[1].y);
+    context.lineTo(centerX, centerY);
+    context.moveTo(vertices[2].x, vertices[2].y);
+    context.lineTo(centerX, centerY);
+    context.stroke();
+
+    context.strokeStyle = "rgba(15, 118, 110, 0.18)";
+    context.lineWidth = 1;
+    context.beginPath();
+    context.moveTo(vertices[0].x, vertices[0].y);
+    context.lineTo(vertices[1].x, vertices[1].y);
+    context.lineTo(vertices[2].x, vertices[2].y);
     context.closePath();
     context.stroke();
+
+    vertices.forEach((point, index) => {
+      const colors = ["rgba(15, 118, 110, 0.9)", "rgba(39, 100, 167, 0.82)", "rgba(179, 67, 51, 0.78)"];
+      drawSpacecraft(point, point.angle + Math.PI / 4, colors[index]);
+    });
+
+    context.save();
+    context.translate(centerX, centerY);
+    context.rotate(phase - 0.18);
+    context.fillStyle = "rgba(23, 32, 28, 0.14)";
+    context.font = `${Math.max(22, radius * 0.28)}px Inter, system-ui, sans-serif`;
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillText("LISA", 0, radius * 0.03);
+    context.restore();
 
     raf = window.requestAnimationFrame(draw);
   }
